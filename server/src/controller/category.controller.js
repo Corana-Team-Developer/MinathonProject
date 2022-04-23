@@ -26,8 +26,7 @@ export async function createCategoryController(req, res) {
  */
 export async function getAllCategoryController(req, res) {
     try {
-        const categories = Category.find()
-
+        const categories = await Category.find()
         return sendSucces(
             res,
             'get all category successfully.',
@@ -44,9 +43,9 @@ export async function getAllCategoryController(req, res) {
  * 
  */
  export async function getCategoryController(req, res) {
-    const { categorieId } = req.params
+    const { categoryId } = req.params
     try {
-        const category= Category.find(categorieId)
+        const category = await Category.findById(categoryId)
 
         return sendSucces(
             res,
