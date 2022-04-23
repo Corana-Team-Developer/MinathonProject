@@ -9,7 +9,7 @@ const PlanSuggestSchema = new Schema (
         },
         workoutPlan: [
             {
-                day: { type: Number, required: true },
+                name: String,
                 exercises: [
                     {
                         exercise: {type: mongoose.Types.ObjectId, ref: 'Exercise'},
