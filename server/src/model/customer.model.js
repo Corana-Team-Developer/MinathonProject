@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { UserGender } from "./user.model.js"
 
 export const FITNESS_GOAL = {
     GAIN_WEIGHT: 0,
@@ -61,6 +62,11 @@ const CustomerSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
+    },
+    gender: {
+        type: Number,
+        enum: [UserGender.MALE, UserGender.FEMALE],
+        // required: true
     },
     weight: Number, // kg
     height: Number, // cm

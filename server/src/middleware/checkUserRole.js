@@ -1,4 +1,4 @@
-import { sendError } from "../helper/client.js"
+import { sendError, HttpStatusCode } from "../helper/client.js"
 import authenticate from "./authenticate.js"
 
 export default function checkUserRole(role = []) {
