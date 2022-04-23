@@ -9,13 +9,14 @@ import { createPlanSuggestController, updatePlanSuggestController, getAllPlanSug
 const router = Router()
 
 // router.use(requireAdmin())
-router.use(checkUserRole([UserType.ADMIN]))
 
 router.post('/plan-suggest/create', 
+    checkUserRole([UserType.ADMIN]),
     createPlanSuggestController
 )
 
 router.post('/plan-suggest/update', 
+    checkUserRole([UserType.ADMIN]),
     updatePlanSuggestController
 )
 
@@ -30,6 +31,7 @@ router.get('/plan-suggest/:planSuggestId',
 //category
 router.post(
     '/category/create',
+    checkUserRole(UserType.ADMIN),
     createCategoryController
 
 )
@@ -48,6 +50,7 @@ router.get(
 //exercise
 router.post(
     '/exercise/create',
+    checkUserRole(UserType.ADMIN),
     createExerciseController
 )
 
