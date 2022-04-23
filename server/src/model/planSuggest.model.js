@@ -10,13 +10,20 @@ const PlanSuggestSchema = new Schema (
         workoutPlan: [
             {
                 day: { type: Number, required: true },
-                exercises: {
-                    exercise: {type: mongoose.Types.ObjectId, ref: 'Exercise'},
-                    set: {type: Number, required: true},
-                    rep: { type: Number, required: true }
-                }
+                exercises: [
+                    {
+                        exercise: {type: mongoose.Types.ObjectId, ref: 'Exercise'},
+                        set: {type: Number, required: true},
+                        rep: { type: Number, required: true },
+                        _id: false
+                    }
+                ],
+                _id: false
             }
         ]
+    },
+    {
+        timestamps: true
     }
 )
 

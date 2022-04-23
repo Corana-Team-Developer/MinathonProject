@@ -6,12 +6,10 @@ import { check } from "express-validator"
  */
 export const createPlanSuggestValidationRule = () => [
     check('BMI.start')
-    .exists().withMessage('BMI is object contain start field.').bail()
-    .isInt({gt:0}).withMessage('start field of BMI is unvalid'),
+    .exists().withMessage('BMI is object contain start field.'),
 
     check('BMI.end')
-    .exists().withMessage('BMI is object contain end field.').bail()
-    .isInt({gt:0}).withMessage('end field of BMI is unvalid')
+    .exists().withMessage('BMI is object contain end field.'),
 ]
 
 /**
