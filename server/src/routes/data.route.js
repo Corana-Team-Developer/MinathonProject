@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { sendSucces } from "../helper/client"
-import { FITNESS_ACTIVE, WEEKLY_GOAL } from "../model/customer.model"
+import { sendSucces } from "../helper/client.js"
+import { FITNESS_ACTIVE, WEEKLY_GOAL } from "../model/customer.model.js"
 
 const router = Router()
 
