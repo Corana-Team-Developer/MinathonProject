@@ -15,10 +15,10 @@ const contractSchema = mongoose.Schema({
         enum: [STATUS.DRAFT, STATUS.PENDING, STATUS.EFFECTIVE, STATUS.CANCLE, STATUS.COMPLETED],
         default: STATUS.DRAFT
     },
-    dateStart: { type: Date, require: true },
-    dateEnd: { type: Date, require: true },
-    price: { type: Number, require: true},
-    note: { type: String },
+    dateStart: { type: Date },
+    dateEnd: { type: Date},
+    price: { type: Number},
+    note: { type: String, require: true },
     createBy: { type: mongoose.Types.ObjectId, ref: 'User' },
     receiveBy: { type: mongoose.Types.ObjectId, ref: 'User' }
 }, {
