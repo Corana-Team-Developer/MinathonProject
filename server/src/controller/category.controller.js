@@ -1,5 +1,5 @@
 import Category from "../model/category.model.js";
-import { sendErrorServerInterval, sendSuccess } from "../helper/client.js";
+import { sendErrorServerInterval, sendSucces } from "../helper/client.js";
 
 /**
  * @route POST /admin/category/create
@@ -9,7 +9,7 @@ export async function createCategoryController(req, res) {
     try {
         const category = await Category.create(req.body)
 
-        return sendSuccess(
+        return sendSucces(
             res, 
             'create new category successfully.',
             category
@@ -28,7 +28,7 @@ export async function getAllCategoryController(req, res) {
     try {
         const categories = Category.find()
 
-        return sendSuccess(
+        return sendSucces(
             res,
             'get all category successfully.',
             categories
@@ -48,7 +48,7 @@ export async function getAllCategoryController(req, res) {
     try {
         const category= Category.find(categorieId)
 
-        return sendSuccess(
+        return sendSucces(
             res,
             "retreive category sucessfully.",
             category
