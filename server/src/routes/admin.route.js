@@ -8,11 +8,7 @@ import { createPlanSuggestController, updatePlanSuggestController, getAllPlanSug
 
 const router = Router()
 
-<<<<<<< HEAD
-// router.use(requireAdmin())
-=======
 router.use(checkUserRole([UserType.ADMIN]))
->>>>>>> 9629f8c2cb1b54d864e71ff4473ef491466dbaeb
 
 // plan suggest
 router.post('/plan-suggest/create', 
