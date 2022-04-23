@@ -43,7 +43,7 @@ export async function createExerciseController(req, res) {
  export async function getExerciseController(req, res) {
      const { exerciseId } = req.params
     try {
-        const exercise = await Exercise.find(exerciseId)
+        const exercise = await Exercise.findById(exerciseId)
 
         return sendSucces(
             res, 

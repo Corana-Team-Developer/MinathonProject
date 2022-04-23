@@ -4,6 +4,7 @@ import User, { UserType } from "../model/user.model.js"
 import { createCategoryController, getAllCategoryController, getCategoryController } from "../controller/category.controller.js";
 import { createExerciseController, getAllExerciseController } from "../controller/exercise.controller.js";
 import { createPlanSuggestController, updatePlanSuggestController, getAllPlanSuggestController, showPlanSuggestController, deletePlanSuggestController } from "../controller/admin.controller.js"
+// import requireAdmin from "../middleware/requireAdmin.js"
 
 const router = Router()
 
@@ -32,35 +33,36 @@ router.delete('/plan-suggest/delete',
 
 //category
 router.post(
-    'category/create',
+    '/category/create',
     createCategoryController
 
 )
 
 router.get(
-    'category/get-all',
+    '/category/get-all',
     getAllCategoryController
 
 )
 
 router.get(
-    'category/:categoryId',
+    '/category/:categoryId',
     getCategoryController
 )
 
 //exercise
 router.post(
-    'exercise/create',
+    '/exercise/create',
     createExerciseController
 )
 
 router.get(
-    'exercise/get-all',
+    '/exercise/get-all',
     getAllExerciseController
 )
 
 router.get(
-    'exercise/:exerciseId'
+    '/exercise/:exerciseId',
+    getExerciseController
 )
 
 

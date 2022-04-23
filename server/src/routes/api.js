@@ -3,6 +3,7 @@ import authenticate from "../middleware/authenticate.js"
 import { handleUploadMultiImage } from "../middleware/handleUploadImage.js"
 import authRouter from "./auth.route.js"
 import dataRouter from "./data.route.js"
+import adminRouter from "./admin.route.js"
 
 const api = Router()
 
