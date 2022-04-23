@@ -15,7 +15,9 @@ const MerchantSchema = new mongoose.Schema({
     ],
     addressWork: {
         detail: String,
-        code: Number
+        wardCode: Number,
+        districtCode: Number,
+        provinceCode: Number
     }
 })
 
