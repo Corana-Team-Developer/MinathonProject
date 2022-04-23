@@ -12,10 +12,12 @@ router.use(checkUserRole([UserType.ADMIN]))
 
 // plan suggest
 router.post('/plan-suggest/create', 
+    checkUserRole([UserType.ADMIN]),
     createPlanSuggestController
 )
 
 router.post('/plan-suggest/update', 
+    checkUserRole([UserType.ADMIN]),
     updatePlanSuggestController
 )
 
@@ -34,6 +36,7 @@ router.delete('/plan-suggest/delete',
 //category
 router.post(
     '/category/create',
+    checkUserRole(UserType.ADMIN),
     createCategoryController
 
 )
@@ -52,6 +55,7 @@ router.get(
 //exercise
 router.post(
     '/exercise/create',
+    checkUserRole(UserType.ADMIN),
     createExerciseController
 )
 
