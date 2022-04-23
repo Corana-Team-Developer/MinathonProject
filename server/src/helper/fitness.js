@@ -34,15 +34,15 @@ export function calculateBMR(weight, height, age, gender) {
  */
 export function calculateTDEE(BMR, active) {
     switch (active) {
-        case FITNESS_ACTIVE.NOT_VERY:
+        case 0:
             return BMR * 1.2
-        case FITNESS_ACTIVE.LIGHT:
+        case 1:
             return BMR * (1.4 + 1.3) / 2
-        case FITNESS_ACTIVE.MEDIUM:
+        case 2:
             return BMR * (1.5 + 1.6) / 2
-        case FITNESS_ACTIVE.ACTIVE:
+        case 3:
             return BMR * (1.7 * 1.8) / 2
-        case FITNESS_ACTIVE.VERY_ACTIVE:
+        case 4:
             return BMR * (2 + 1.9) / 2
         default:
             throw new Error('active is invalid.')
