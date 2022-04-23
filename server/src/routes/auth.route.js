@@ -7,13 +7,13 @@ const router = Router()
 
 router.post(
     '/register',
-    validate(userRegisterValidationRule),
+    // validate(userRegisterValidationRule),
     userRegisterController
 )
 
 router.post(
     '/login',
-    validate(userLoginValidationRule),
+    // validate(userLoginValidationRule),
     userLoginController
 )
 
