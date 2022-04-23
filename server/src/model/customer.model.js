@@ -6,13 +6,56 @@ export const FITNESS_GOAL = {
     MAINTAIN: 2
 }
 
-export const FITNESS_ACTIVE = {
-    NOT_VERY: 0,
-    LIGHT: 1,
-    MEDIUM: 3,
-    ACTIVE: 4,
-    VERY_ACTIVE: 5,
-}
+export const FITNESS_ACTIVE = [
+    {
+        name: 'Not very active',
+        description: 'Spend most of the day sitting (e.g. bank teller, desk job)',
+        value: 0
+    },
+    {
+        name: 'Light active',
+        description: 'Spend a good part of the day on your feet (e.g. teacher, salesperson)',
+        value: 1
+    },
+    {
+        name: 'Medium active',
+        description: 'Have a medium active daily.',
+        value: 2
+    },
+    {
+        name: 'Active',
+        description: 'Spend a good part of the day doing some physical activity.',
+        value: 3
+    },
+    {
+        name: 'Very active',
+        description: 'Spend most of the day doing heavy physical activity.',
+        value: 4
+    }
+]
+
+export const WEEKLY_GOAL = [
+    {
+        name: 'Lose 1kg per week',
+        value: -1
+    },
+    {
+        name: 'Lose 0.5kg per week',
+        value: -0.5
+    },
+    {
+        name: 'Maintain my current weight',
+        value: 0
+    },
+    {
+        name: 'Gain 0.5kg per week',
+        value: 0.5
+    },
+    {
+        name: 'Gain 1kg per week',
+        value: 1
+    }
+]
 
 const CustomerSchema = new mongoose.Schema({
     user: {
@@ -22,9 +65,28 @@ const CustomerSchema = new mongoose.Schema({
     weight: Number, // kg
     height: Number, // cm
     goal: {
-        type: Number,
-        enum: [FITNESS_GOAL.GAIN_WEIGHT, FITNESS_GOAL.LOSE_WEIGHT, FITNESS_GOAL.MAINTAIN]
+        startingWeight: {
+            time: Date,
+            value: Number
+        },
+        currentWeight: Number,
+        goalWeight: Number,
+        weeklyGoal: {
+            name: String,
+            value: Number
+        },
+        active: {
+            name: String,
+            description: String,
+            value: Number
+        }
     },
+    progress: [
+        {
+            weight: Number,
+            time: Date,
+        }
+    ],
     timeCanWorkout: [
         {
             day: {
@@ -38,16 +100,6 @@ const CustomerSchema = new mongoose.Schema({
     addressWorkout: {
         detail: String,
         code: Number
-    },
-    active: {
-        type: Number,
-        enum: [
-            FITNESS_ACTIVE.NOT_VERY,
-            FITNESS_ACTIVE.LIGHT,
-            FITNESS_ACTIVE.MEDIUM,
-            FITNESS_ACTIVE.ACTIVE,
-            FITNESS_ACTIVE.VERY_ACTIVE
-        ]
     }
 })
 
