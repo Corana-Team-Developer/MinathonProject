@@ -27,7 +27,9 @@ const UserSchema = new mongoose.Schema({
     },
     address: {
         detail: String,
-        code: Number
+        wardCode: Number,
+        districtCode: Number,
+        provinceCode: Number
     },
     userType: {
         type: Number,

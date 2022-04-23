@@ -85,6 +85,7 @@ const CustomerSchema = new mongoose.Schema({
         {
             weight: Number,
             time: Date,
+            _id: false
         }
     ],
     timeCanWorkout: [
@@ -95,11 +96,14 @@ const CustomerSchema = new mongoose.Schema({
             },
             timeStart: String,
             endStart: String,
+            _id: false
         }
     ],
     addressWorkout: {
         detail: String,
-        code: Number
+        wardCode: Number,
+        districtCode: Number,
+        provinceCode: Number
     }
 })
 

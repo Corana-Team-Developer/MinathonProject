@@ -1,16 +1,32 @@
 import omit from "lodash.omit"
 import jwt from "jsonwebtoken"
 import { HttpStatusCode, sendError, sendErrorServerInterval, sendSucces } from "../helper/client.js"
-import User from "../model/user.model.js"
+import User, { UserType } from "../model/user.model.js"
 import config from "../../config/default.js"
+import Customer from "../model/customer.model.js"
+import Merchant from "../model/merchant.model.js"
 
 /**
  * @route POST /api/auth/register
  * @description
  */
 export async function userRegisterController(req, res) {
+    const userType = req.body.userType ?? UserType.CUSTOMER
+    if (userType == UserType.ADMIN) {
+        return sendError(
+            res,
+            HttpStatusCode.BAD_REQUEST,
+            'userType is invalid.'
+        )
+    }
+
     try {
-        const user = await User.create(req.body)
+        const user = await User.create({...req.body, userType})
+        if (userType === UserType.CUSTOMER) {
+            await Customer.create({user: user._id})
+        } else if (userType === UserType.MERCHANT) {
+            await Merchant.create({user: user._id})
+        }
 
         return sendSucces(
             res,
@@ -23,6 +39,10 @@ export async function userRegisterController(req, res) {
     }
 }
 
+/**
+ * @route POST /api/auth/login
+ * @description
+ */
 export async function userLoginController(req, res) {
     const { password, email } = req.body
 

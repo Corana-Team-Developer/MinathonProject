@@ -12,7 +12,7 @@ router.get('/get-fitness-active', (req, res) => {
     )
 })
 
-router.get('get-weekly-goal', (req, res) => {
+router.get('/get-weekly-goal', (req, res) => {
     return sendSucces(
         res,
         'retreive data fitness goal successfully.',
