@@ -4,8 +4,13 @@ import config from "../../config/default.js"
 
 export const UserType = {
     CUSTOMER: 0,
-    MANAGER: 1,
+    MERCHANT: 1,
     ADMIN: 2
+}
+
+export const UserGender = {
+    MALE: 0,
+    FEMALE: 1
 }
 
 const UserSchema = new mongoose.Schema({
@@ -13,15 +18,20 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     phone: { type: String, required: true },
+    bod: Date,
+    avatar: String,
+    gender: {
+        type: Number,
+        enum: [UserGender.MALE, UserGender.FEMALE],
+        required: true
+    },
     address: {
         detail: String,
-        district: String,
-        ward: String,
-        province: String
+        code: Number
     },
     userType: {
         type: Number,
-        enum: [UserType.CUSTOMER, UserType.MANAGER, UserType.ADMIN],
+        enum: [UserType.CUSTOMER, UserType.MERCHANT, UserType.ADMIN],
         required: true,
         default: UserType.CUSTOMER
     }
