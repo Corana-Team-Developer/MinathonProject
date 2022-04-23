@@ -1,6 +1,6 @@
 import { Router } from "express"
 import authenticate from "../middleware/authenticate.js"
-import handleUploadImage, { handleUploadMultiImage } from "../middleware/handleUploadImage.js"
+import { handleUploadMultiImage } from "../middleware/handleUploadImage.js"
 import authRouter from "./auth.route.js"
 import adminRouter from "./admin.route.js"
 const api = Router()
