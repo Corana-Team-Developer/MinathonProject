@@ -4,10 +4,12 @@ import { handleUploadMultiImage } from "../middleware/handleUploadImage.js"
 import authRouter from "./auth.route.js"
 import dataRouter from "./data.route.js"
 import adminRouter from "./admin.route.js"
+import contractRouter from "./contract.route.js"
 import customerRouter from "./customer.route.js"
 
 const api = Router()
 
+api.use('/contract', contractRouter)
 api.use('/auth', authRouter)
 api.use('/data', dataRouter)
 api.use('/admin', adminRouter)
