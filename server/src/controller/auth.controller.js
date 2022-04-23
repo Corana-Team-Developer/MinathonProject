@@ -23,9 +23,9 @@ export async function userRegisterController(req, res) {
     try {
         const user = await User.create({...req.body, userType})
         if (userType === UserType.CUSTOMER) {
-            await Customer.create({user: user._id})
+            await Customer.create({user: user._id, gender: req.body.gender})
         } else if (userType === UserType.MERCHANT) {
-            await Merchant.create({user: user._id})
+            await Merchant.create({user: user._id, gender: req.body.gender})
         }
 
         return sendSucces(
