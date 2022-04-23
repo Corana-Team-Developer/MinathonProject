@@ -8,7 +8,21 @@ import PlanSuggest from "../model/planSuggest.model.js"
  * @access private only Admin
  */
 export async function getAllPlanSuggestController(req, res) {
-    
+    const page = req.query.page ?? 1
+    const limit = req.query.limit ?? 8
+    try {
+        const PlanSuggests = await PlanSuggest.find({})
+            .skip((page - 1) * limit)
+            .limit(limit);
+        return sendSucces(
+            res,
+            "get all plan suggest successfully.",
+            PlanSuggests
+        )
+    } catch (error) {
+        console.log(error)
+        return sendErrorServerInterval(res)
+    }
 }
 
 /**
@@ -17,25 +31,57 @@ export async function getAllPlanSuggestController(req, res) {
  * @access private only Admin
  */
 export async function createPlanSuggestController(req, res) {
-
+    try {
+        const planSuggest = await PlanSuggest.create(req.body)
+        return sendSucces(
+            res,
+            "create plan suggest successfully.",
+            planSuggest
+        )
+    } catch (error) {
+        console.log(error)
+        return sendErrorServerInterval(res)
+    }
 }
 
 /**
- * @route /api/admin/plan-suggest/edit
- * @description admin edit plan suggest
+ * @route /api/admin/plan-suggest/update
+ * @description admin update plan suggest
  * @access private only Admin
  */
 export async function updatePlanSuggestController(req, res) {
-   
+    const {planSuggestId} = req.body
+    try {
+        const planSuggest = await PlanSuggest.findByIdAndUpdate(planSuggestId, req.body)
+        return sendSucces(
+            res,
+            "create plan suggest successfully.",
+            planSuggest
+        )
+    } catch (error) {
+        console.log(error)
+        return sendErrorServerInterval(res)
+    }
 }
 
 /**
  * @route /api/admin/plan-suggest/:planSuggestId
- * @description admin delete plan suggest
+ * @description admin show plan suggest
  * @access private only Admin
  */
  export async function showPlanSuggestController(req, res) {
- 
+    const {planSuggestId} = req.params
+    try {
+        const planSuggest = await PlanSuggest.findById(planSuggestId)
+        return sendSucces(
+            res,
+            "show plan suggest successfully.",
+            planSuggest
+        )
+    } catch (error) {
+        console.log(error)
+        return sendErrorServerInterval(res)
+    }
 }
 
 /**
@@ -44,5 +90,15 @@ export async function updatePlanSuggestController(req, res) {
  * @access private only Admin
  */
 export async function deletePlanSuggestController(req, res) {
- 
+    const {planSuggestId} = req.body
+    try {
+        await PlanSuggest.findByIdAndDelete(planSuggestId, req.body)
+        return sendSucces(
+            res,
+            "delete plan suggest successfully.",
+        )
+    } catch (error) {
+        console.log(error)
+        return sendErrorServerInterval(res)
+    }
 }
