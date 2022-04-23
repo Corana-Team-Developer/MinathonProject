@@ -8,7 +8,7 @@ const api = Router()
 
 api.use('/auth', authRouter)
 api.use('/data', dataRouter)
-
+api.use('/admin', adminRouter)
 api.get('/test-access-token', authenticate(), (req, res) => res.sendStatus(200))
 api.post('/test-upload-file', handleUploadMultiImage('images'), (req, res) => {
     console.log(req.files.map(file => file.path))
