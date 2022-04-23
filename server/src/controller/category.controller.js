@@ -1,5 +1,5 @@
-import Category from "../model/category.model";
-import { sendErrorServerInterval, sendSuccess } from "../helper/client";
+import Category from "../model/category.model.js";
+import { sendErrorServerInterval, sendSuccess } from "../helper/client.js";
 
 /**
  * @route POST /admin/category/create

@@ -1,8 +1,8 @@
 import { Router } from "express"
 import checkUserRole from "../middleware/checkUserRole.js"
 import User, { UserType } from "../model/user.model.js"
-import { createCategoryController, getAllCategoryController, getCategoryController } from "../controller/category.controller";
-import { createExerciseController, getAllExerciseController } from "../controller/exercise.controller";
+import { createCategoryController, getAllCategoryController, getCategoryController } from "../controller/category.controller.js";
+import { createExerciseController, getAllExerciseController } from "../controller/exercise.controller.js";
 import { createPlanSuggestController, updatePlanSuggestController, getAllPlanSuggestController, showPlanSuggestController } from "../controller/admin.controller.js"
 // import requireAdmin from "../middleware/requireAdmin.js"
 

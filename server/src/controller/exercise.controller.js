@@ -1,5 +1,5 @@
-import Exercise from "../model/exercise.model";
-import { sendErrorServerInterval, sendSuccess } from "../helper/client";
+import Exercise from "../model/exercise.model.js";
+import { sendErrorServerInterval, sendSuccess } from "../helper/client.js";
 
 /**
  * @route POST /admin/exercise/create
@@ -47,7 +47,7 @@ export async function createExerciseController(req, res) {
 
         return sendSuccess(
             res, 
-            'get all exercises successfully.',
+            'retreive exercise successfully.',
             exercise
         )
     } catch (error) {
