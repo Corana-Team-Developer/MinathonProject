@@ -38,11 +38,29 @@ const Signup = () => {
       }
     }
     const handleResponseData=(res) =>{
-      if(res.success && res.data.userType===0){
-        history.push("/customer/fill")
-      }
-      else if(res.success && res.data.userType===1){
-        history.push("/pt/fill")
+      if(res.success){
+        const reqLogin = {
+          method: 'POST',
+          url: `${API_URL}/auth/login`,
+          data: {
+            email: emailInputRef.current.value,
+            password: passwordInputRef.current.value
+          }
+        }
+        const handleRequestLogin=(res)=>{
+          console.log(res)
+          if(res.success){
+            localStorage.setItem('token',res.data.accessToken)
+            localStorage.setItem('user',JSON.stringify(res.data.user))
+          }
+        }
+        sendRequest(reqLogin,handleRequestLogin)
+        if(res.data.userType===0){
+          history.push("/customer/fill")
+        }
+        else if(res.data.userType===1){
+          history.push("/pt/fill")
+        }
       }
     }
     sendRequest(req,handleResponseData);
