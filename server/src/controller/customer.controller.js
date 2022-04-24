@@ -4,6 +4,7 @@ import { getCleanObject } from "../helper/common.js"
 import { HttpStatusCode, sendError, sendErrorServerInterval, sendSucces } from "../helper/client.js"
 import { getCurrentDate } from "../helper/date.js"
 import Food from "../model/food.model.js"
+import Feedback from "../model/feedback.model.js"
 
 /**
  * @route POST /api/customer/workout/update-profile
@@ -249,4 +250,137 @@ export async function editFoodFromFoodTracking(req, res) {
         return sendErrorServerInterval(res)
     }
 }
+
+/**
+ * @route POST /api/customer/feedback/create
+ * @description create new Feedback
+ */
+export async function createFeedback(req, res){
+    const { user } = res.locals
+    const { merchant, rating, review } = req.body
+    const query = {
+        customer: user._id,
+        merchant: merchant,
+        rating: rating,
+        review: review
+    }
+    try {
+        const feedback = await Feedback.create(query)
+        return sendSucces(
+            res,
+            'create feedback successfully.',
+            feedback
+        )
+    } catch (error) {
+        console.log(error)
+        return sendErrorServerInterval(res)
+    }
+}
+
+/**
+ * @route POST /api/customer/feedback/update
+ * @description update Feedback
+ */
+ export async function updateFeedback(req, res){
+    const { user } = res.locals
+    const { feedbackId, rating, review } = req.body
+    try {
+        const feedback = await Feedback.findById(feedbackId)
+        console.log(user._id)
+        console.log(feedback.customer)
+        if(!feedback.customer.equals(user._id)){
+            return sendError(
+                res,
+                HttpStatusCode.BAD_REQUEST,
+                "customer can't update this feedback"
+            )
+        }
+        const query = {
+            rating: rating,
+            review: review
+        }
+        const feedbackEdited = await Feedback.findByIdAndUpdate(feedbackId,query)
+        return sendSucces(
+            res,
+            'update feedback successfully.',
+            feedbackEdited
+        )
+    } catch (error) {
+        console.log(error)
+        return sendErrorServerInterval(res)
+    }
+}
+
+/**
+ * @route POST /api/customer/feedback/delete
+ * @description delete Feedback
+ */
+ export async function deleteFeedback(req, res){
+    const { user } = res.locals
+    const { feedbackId } = req.body
+
+    try {
+        const feedback = await Feedback.findById(feedbackId)
+        if(!feedback.customer.equals(user._id)){
+            return sendError(
+                res,
+                HttpStatusCode.BAD_REQUEST,
+                "customer can't delete this feedback"
+            )
+        }
+        await Feedback.findByIdAndDelete(feedbackId)
+        return sendSucces(
+            res,
+            'delete feedback successfully.'
+        )
+    } catch (error) {
+        console.log(error)
+        return sendErrorServerInterval(res)
+    }
+}
+
+/**
+ * @route GET /api/customer/feedback/merchant/:merchantId
+ * @description get merchant feedback
+ */
+ export async function getMerchantFeedback(req, res){
+    const { merchantId } = req.params
+    const page = req.query.page ?? 1
+    const limit = req.query.limit ?? 8
+
+    try {
+        const listFeedbacks = await Feedback.find({merchant: merchantId})
+        .skip((page-1)*limit)
+        .limit(limit)
+        return sendSucces(
+            res,
+            'get merchant feedback successfully.',
+            listFeedbacks
+        )
+    } catch (error) {
+        console.log(error)
+        return sendErrorServerInterval(res)
+    }
+}
+
+/**
+ * @route GET /api/customer/feedback/:feedbackId
+ * @description show feedback
+ */
+ export async function showFeedback(req, res){
+    const { feedbackId } = req.params
+    try {
+        const feedback = await Feedback.findById(feedbackId)
+        return sendSucces(
+            res,
+            ' feedback successfully.',
+            feedback
+        )
+    } catch (error) {
+        console.log(error)
+        return sendErrorServerInterval(res)
+    }
+}
+
+
 
