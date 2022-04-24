@@ -1,13 +1,16 @@
 import React from "react";
 import classes from "../../styles/DetailExercise.module.css"
-const DetailExercise = () => {
+const DetailExercise = ({data}) => {
   return <div className={classes.container}>
   <div className={classes.uppertext}>
     <p className="text-center">Detail</p>
   </div>
-  <div className={classes.detail}>
-    <img src="https://classroomclipart.com/images/gallery/Clipart/Fitness_and_Exercise/man-working-out-in-gym-with-blue-exercise-ball-clipart.jpg" />
-  </div>
+  {data && (
+    <div className={classes.detail + " p-2"}>
+      <img src={`http://localhost:5000/` + data.image.replaceAll(' ', '_')} className="w-32 h-56"/>
+      <p className="mt-1">{data.instructions[0]}</p>
+    </div>
+  )}
 </div>
 };
 

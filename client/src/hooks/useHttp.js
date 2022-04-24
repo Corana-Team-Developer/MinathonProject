@@ -24,4 +24,10 @@ const useHttp = () => {
     }
 }
 
+export const useAuthConfig = () => ({
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+})
+
 export default useHttp

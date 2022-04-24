@@ -1,8 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FoodList from "./FoodList";
 import ListMeal from "./ListMeal";
 import GaugeChart from "react-gauge-chart";
+import { useAuthConfig } from "../../hooks/useHttp";
+import axios from "axios";
+import { API_URL } from "../../helpers/API";
+
 const Diet = () => {
+  const authConfig = useAuthConfig()
+  const [foods, setFoods] = useState([])
+  const [key, setKey] = useState('')
+  const [resultFood, setResultFood] = useState([])
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get(`${API_URL}/customer/food`, authConfig)
+        setFoods(res.data.data ?? [])
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+  }, [])
+
+  const searchFoodsEvent = async event => {
+    event.preventDefault()
+    try {
+      const res = await axios.get(`${API_URL}/food/search?key=${key}`)
+      setResultFood(res.data.data ?? [])
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="px-24 grid grid-cols-2 ">
       <div>
@@ -19,17 +49,19 @@ const Diet = () => {
       <div>
         <div class="flex ml-10 mt-10">
           <div class="mb-3 xl:w-96">
-            <div class="input-group relative flex items-stretch w-full">
+            <form onSubmit={searchFoodsEvent} 
+            class="input-group relative flex items-stretch w-full">
               <input
                 type="search"
                 class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 placeholder="Search Food"
                 aria-label="Search"
                 aria-describedby="button-addon2"
+                onChange={e => setKey(e.target.value)}
               />
               <button
                 class="btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
-                type="button"
+                type="submit"
                 id="button-addon2"
                 style={{backgroundColor: "ec7807"}}
               >
@@ -49,10 +81,10 @@ const Diet = () => {
                   ></path>
                 </svg>
               </button>
-            </div>
+            </form>
           </div>
         </div>
-        <FoodList />
+        <FoodList data={resultFood}/>
       </div>
     </div>
   );

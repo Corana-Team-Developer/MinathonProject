@@ -2,7 +2,19 @@ import React, { useState } from "react";
 import { Cities, Wards, Districts } from "../../helpers/constant";
 import { Multiselect } from "multiselect-react-dropdown";
 import TableStartEnd from "../TableStartEnd";
+import axios from "axios";
+import { API_URL } from "../../helpers/API";
+import { useAuthConfig } from "../../hooks/useHttp";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { planActions } from "../../store/plan-context";
+
 const FormFillInfo = () => {
+  const dispatch = useDispatch()
+  const [weight, setWeight] = useState();
+  const [height, setHeight] = useState();
+  const authConfig = useAuthConfig();
+  const history = useHistory();
   const [selectedCityValue, setSelectedCityValue] = useState();
   const [selectedDistrictValue,setSelectedDistrictValue] = useState();
   const [selectedWardValue, setSelectedWardValue] = useState();
@@ -24,9 +36,26 @@ const FormFillInfo = () => {
   const onSelectWardHandler = (event) => {
     setSelectedWardValue(event.target.value);
   }
-  const onSubmitHandler = (event)=>{
+  const onSubmitHandler = async (event)=>{
     event.preventDefault();
-    console.log(selectedCityValue,selectedDistrictValue,selectedWardValue)
+    console.log(selectedCityValue,selectedDistrictValue,selectedWardValue, selectedValue, height, weight)
+    try {
+      const res = await axios.post(`${API_URL}/customer/workout/update-profile`, {
+        height, weight, timeCanWorkout: [{day: 1, timeStart: "10:00", timeEnd: "20:00"}],
+        addressWorkout: {
+          detail: 'somewhere',
+          provinceCode: selectedCityValue,
+          districtCode: selectedDistrictValue,
+          wardCode: selectedWardValue
+        }
+      }, authConfig)
+      const plan = res.data.data.planSuggest?.workoutPlan
+      dispatch(planActions.setPlan({data: plan}))
+      
+      history.push('/customer/plan')
+    } catch (error) {
+      console.log(error)     
+    }
   }
   const options = [
     { name: "Monday", id: 1 },
@@ -46,10 +75,6 @@ const FormFillInfo = () => {
       selectedValue.filter((item) => item.id !== selectedItem.id)
     );
   };
-  const onSubmitHandler = (event)=>{
-    event.preventDefault();
-    
-  }
   return (
     <div className="">
       <form onSubmit={onSubmitHandler}>
@@ -60,12 +85,13 @@ const FormFillInfo = () => {
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             required=""
+            onChange={e => setWeight(e.target.value)}
           />
           <label
             for="floating_email"
             className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
-            Weight
+            Weight (kg)
           </label>
         </div>
         <div className="relative z-0 mb-6 w-full group">
@@ -76,29 +102,13 @@ const FormFillInfo = () => {
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             required=""
+            onChange={e => setHeight(e.target.value)}
           />
           <label
             for="floating_password"
             className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
-            Height
-          </label>
-        </div>
-        <div className="relative z-0 mb-6 w-full group">
-          <input
-            type="tel"
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-            name="floating_phone"
-            id="floating_phone"
-            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" "
-            required=""
-          />
-          <label
-            for="floating_phone"
-            className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >
-            Phone number (123-456-7890)
+            Height (cm)
           </label>
         </div>
         <div className="grid xl:grid-cols-2 xl:gap-6"></div>
