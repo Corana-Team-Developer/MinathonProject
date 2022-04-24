@@ -98,7 +98,7 @@ const CustomerSchema = new mongoose.Schema({
         {
             day: {
                 type: Number,
-                enum: [0, 1, 2, 3, 4, 5, 6]
+                enum: [1, 2, 3, 4, 5, 6, 7]
             },
             timeStart: String,
             endStart: String,
@@ -110,6 +110,10 @@ const CustomerSchema = new mongoose.Schema({
         wardCode: Number,
         districtCode: Number,
         provinceCode: Number
+    },
+    planSuggest: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'plansuggests'
     }
 })
 

@@ -27,5 +27,5 @@ const PlanSuggestSchema = new Schema (
     }
 )
 
-const PlanSuggest = mongoose.model('PlanSuggest', PlanSuggestSchema)
+const PlanSuggest = mongoose.model('plansuggests', PlanSuggestSchema)
 export default PlanSuggest;

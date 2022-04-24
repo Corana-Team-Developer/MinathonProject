@@ -4,6 +4,8 @@ import { getCleanObject } from "../helper/common.js"
 import { HttpStatusCode, sendError, sendErrorServerInterval, sendSucces } from "../helper/client.js"
 import { getCurrentDate } from "../helper/date.js"
 import Food from "../model/food.model.js"
+import { calculateBMI } from "../helper/fitness.js"
+import PlanSuggest from "../model/planSuggest.model.js"
 
 /**
  * @route POST /api/customer/workout/update-profile
@@ -12,16 +14,25 @@ import Food from "../model/food.model.js"
 export async function updateWorkoutProfile(req, res) {
     const { user } = res.locals
     const { height, weight, addressWorkout, timeCanWorkout } = req.body
+    const BMI = calculateBMI(weight, height * 1.0 / 100 )
 
     try {
+        const planSuggest = await PlanSuggest.findOne({
+            'BMI.start': {$lt: BMI},
+            'BMI.end': {$gt: BMI}
+        })
+
         const customer = await Customer.findOneAndUpdate(
             {user: user._id},
             getCleanObject({
-                height, weight, addressWorkout, timeCanWorkout
+                height, weight, addressWorkout, timeCanWorkout,
+                planSuggest: planSuggest._id
             }),
             { new: true }
         )
-
+        await customer.populate('planSuggest')
+        await customer.populate('planSuggest.workoutPlan.exercises.exercise')
+        
         return sendSucces(
             res,
             'update customer workout profile successfully.',

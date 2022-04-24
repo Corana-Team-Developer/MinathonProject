@@ -1,3 +1,5 @@
+import fs from "fs"
+
 const plans = [
     {
         BMI: {
@@ -444,3 +446,7 @@ const plans = [
         ]
     }
 ]
+
+fs.writeFile('planSuggest.json', JSON.stringify(plans), 'utf-8', () => {
+    console.log("done")
+})
