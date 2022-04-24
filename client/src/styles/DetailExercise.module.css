@@ -1,0 +1,24 @@
+.uppertext{
+    background-color: #404040;
+    color: #ec7807;
+    font-size: 2rem;
+    padding: 0.5rem;
+    border-radius: 5px 5px 0 0;
+}
+.day{
+    padding: 0.5rem;
+    border-bottom: 1px solid #404040;
+}
+.container{
+    border-top: 1px solid #404040;
+    border-left: 1px solid #404040;
+    border-right: 1px solid #404040;
+    border-radius: 5px;
+    height: 70vh;
+}
+.detail{
+
+}
+.detail img{
+    width: 100%;
+}
