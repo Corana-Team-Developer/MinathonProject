@@ -25,10 +25,10 @@
   }
   .modal {
     position: fixed;
-    top: 5vh;
+    top: 10vh;
     left: 20%;  
     width: 60%;
-    height: 78vh;
+    height: 30vh;
     overflow-y: scroll;
     padding: 1rem;
     background-color: white;

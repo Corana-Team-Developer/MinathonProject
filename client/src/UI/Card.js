@@ -1,10 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { showhideAction } from "../store/showhide-context";
+import useHttp from "../hooks/useHttp";
 const Card = () => {
   const dispatch = useDispatch();
+  const {sendRequest} = useHttp();
   const onCreateConstrastHandler = () => {
-    console.log("temp");
     dispatch(showhideAction.showFormHandler());
   };
   return (
@@ -45,7 +46,7 @@ const Card = () => {
             className="text-center p-3 bg-orange-400 rounded-lg"
             onClick={onCreateConstrastHandler}
           >
-            Create constrast
+            Contact
           </button>
         </div>
       </div>

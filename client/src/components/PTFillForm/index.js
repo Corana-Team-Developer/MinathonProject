@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import { Cities, Wards, Districts } from "../../helpers/constant";
 import { Multiselect } from "multiselect-react-dropdown";
 import TableStartEnd from "../TableStartEnd";
+import { API_URL } from "../../helpers/API";
+import useHttp from "../../hooks/useHttp";
+import { useHistory } from "react-router-dom";
+import authHeader from "../../helpers/authHeader";
 const FormFillInfo = () => {
+  const history = useHistory()
+  const {sendRequest} = useHttp()
   const [selectedCityValue, setSelectedCityValue] = useState();
   const [selectedDistrictValue, setSelectedDistrictValue] = useState();
   const [selectedWardValue, setSelectedWardValue] = useState();
@@ -28,7 +34,26 @@ const FormFillInfo = () => {
   };
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(selectedCityValue, selectedDistrictValue, selectedWardValue);
+    const req = {
+      method: "POST",
+      url: `${API_URL}/merchant/update-profile`,
+      data: {
+        advantages: selectedForteValue[0].value,
+        addressWork: {
+          wardCode: selectedWardValue,
+          districtCode: selectedDistrictValue,
+          provinceCode: selectedCityValue,
+        },
+      },
+      headers: authHeader()
+    };
+    const handleResponseData=(res)=>{
+      console.log(res);
+      if(res.success){
+          history.push("/PT/findcustomer")
+      }
+    }
+    sendRequest(req,handleResponseData);
   };
   const options = [
     { name: "Monday", id: 1 },
