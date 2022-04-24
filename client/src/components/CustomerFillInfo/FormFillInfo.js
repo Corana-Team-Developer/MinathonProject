@@ -46,9 +46,13 @@ const FormFillInfo = () => {
       selectedValue.filter((item) => item.id !== selectedItem.id)
     );
   };
+  const onSubmitHandler = (event)=>{
+    event.preventDefault();
+    
+  }
   return (
     <div className="">
-      <form>
+      <form onSubmit={onSubmitHandler}>
         <div className="relative z-0 mb-6 w-full group">
           <input
             type="number"
